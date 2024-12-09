@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'jacoco'
 }
 
 apply plugin: 'maven-publish'
@@ -13,9 +14,22 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
 dependencies {
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:3.10.0'
+    testImplementation 'org.mockito:mockito-core:5.14.2'
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
+
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.8.2")
 
     api 'org.json:json:20231013'
