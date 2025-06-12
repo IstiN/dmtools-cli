@@ -1,0 +1,9 @@
+<tr class="date">
+    <th></th>
+    <#list headers as header>
+        <th></th>
+    </#list>
+    <#list releases as release>
+        <th>${release.startDateAsString}-${release.endDateAsString}</th>
+    </#list>
+</tr>
