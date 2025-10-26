@@ -279,7 +279,7 @@ public class KBOrchestrator {
             // First check if content is valid JSON
             JsonParser.parseString(content);
             // If we get here, it's valid JSON - format it
-            return LLMOptimizedJson.format(content);
+            return LLMOptimizedJson.formatSkipEmpty(content, true);
         } catch (Exception e) {
             // Not JSON or failed to parse - check for other formats
             logger.debug("Input is not JSON or failed to parse: {}", e.getMessage());
