@@ -45,6 +45,7 @@ public class DevChart {
         private String formula;
 
         public Map<Metric, List<KeyTime>> customMetrics = new HashMap<>();
+
         @Getter
         @Setter
         private int defaultCurrentIteration;
