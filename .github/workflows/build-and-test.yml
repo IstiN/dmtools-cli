@@ -219,14 +219,6 @@ jobs:
             exit 1
           fi
           
-          # Copy Server JAR (rename for consistency)
-          else
-            echo "❌ ERROR: Server JAR not found"
-            echo "Available JAR files in root:"
-            ls -lh *.jar 2>/dev/null || echo "No JAR files found"
-            exit 1
-          fi
-          
           # Copy scripts
           if [ ! -f install.sh ]; then
             echo "❌ ERROR: install.sh not found in current directory"
