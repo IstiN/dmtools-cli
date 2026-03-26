@@ -34,7 +34,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by opening a [GitHub Issue](https://github.com/IstiN/dmtools/issues) or contacting the project maintainers directly. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by opening a [GitHub Issue](https://github.com/IstiN/dmtools-cli/issues) or contacting the project maintainers directly. All complaints will be reviewed and investigated promptly and fairly.
 
 ## Attribution
 

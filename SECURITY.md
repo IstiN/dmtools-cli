@@ -13,7 +13,7 @@
 
 To report a security issue responsibly:
 
-1. Open a [GitHub Security Advisory](https://github.com/IstiN/dmtools/security/advisories/new) (preferred — keeps the report private until patched).
+1. Open a [GitHub Security Advisory](https://github.com/IstiN/dmtools-cli/security/advisories/new) (preferred — keeps the report private until patched).
 2. Alternatively, email the maintainers directly via the contact listed on the [GitHub profile](https://github.com/IstiN).
 
 Please include:
@@ -35,4 +35,4 @@ We follow the [GitHub coordinated disclosure guidelines](https://docs.github.com
 - Never commit real credentials to your repository. Use `dmtools.env` (already in `.gitignore`).
 - Rotate any credentials that may have been accidentally exposed immediately.
 - Run DMTools with the minimum required permissions for each integration.
-- Keep your DMTools installation up to date: `curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools/main/install.sh | bash`
+- Keep your DMTools installation up to date: `curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools-cli/main/install.sh | bash`

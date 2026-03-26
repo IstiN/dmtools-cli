@@ -6,8 +6,8 @@ Thank you for your interest in contributing! This document explains how to build
 
 ```bash
 # Clone the repository
-git clone https://github.com/IstiN/dmtools.git
-cd dmtools
+git clone https://github.com/IstiN/dmtools-cli.git
+cd dmtools-cli
 
 # Copy the example env file and fill in your credentials
 cp dmtools.env.example dmtools.env
@@ -59,11 +59,11 @@ See the step-by-step guide in `CLAUDE.md` under **"Adding a New MCP Tool"** and 
 
 ## Reporting Bugs
 
-Please open a [GitHub Issue](https://github.com/IstiN/dmtools/issues) with:
+Please open a [GitHub Issue](https://github.com/IstiN/dmtools-cli/issues) with:
 - A minimal reproduction case
 - Your DMTools version (`./dmtools.sh --version`)
 - Operating system and Java version
 
 ## Questions
 
-Use [GitHub Discussions](https://github.com/IstiN/dmtools/discussions) for questions and ideas.
+Use [GitHub Discussions](https://github.com/IstiN/dmtools-cli/discussions) for questions and ideas.

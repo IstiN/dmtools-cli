@@ -1,1 +1,2 @@
-include 'dmtools-core', 'dmtools-server', 'dmtools-automation', 'dmtools-mcp-annotations', 'dmtools-annotation-processor'
+rootProject.name = 'dmtools-cli'
+include 'dmtools-core', 'dmtools-mcp-annotations', 'dmtools-annotation-processor'
