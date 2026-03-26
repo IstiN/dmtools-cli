@@ -24,6 +24,11 @@ on:
         default: false
         type: boolean
 
+permissions:
+  contents: write
+  checks: write
+  packages: write
+
 jobs:
   create-standalone-release:
     runs-on: ubuntu-latest

@@ -8,6 +8,11 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: write
+  checks: write
+  packages: write
+
 jobs:
   version-and-tag:
     runs-on: ubuntu-latest
