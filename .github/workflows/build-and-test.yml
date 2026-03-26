@@ -36,7 +36,6 @@ jobs:
         run: |
           ./gradlew clean build \
             :dmtools-core:shadowJar \
-            publish \
             -x integrationTest \
             -x :dmtools-core:test \
             --no-daemon --info 2>&1 | tee gradle-build.log
