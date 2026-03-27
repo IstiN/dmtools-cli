@@ -3,7 +3,7 @@ name: dmtools
 description: Comprehensive documentation and assistance for DMtools - AI-powered development toolkit with 96+ MCP tools for Jira, Azure DevOps, Figma, Confluence, Teams, and test automation. Use when working with DMtools, configuring integrations, developing JavaScript agents, generating test cases, building reports (ReportGenerator/dmc_report), creating CLI agent workflows, or setting up CI/CD run tracing (ciRunUrl) for Teammate/Expert/TestCasesGenerator jobs.
 license: Apache-2.0
 compatibility:
-  - Java 23+
+  - Java 17+
   - macOS, Linux, Windows (WSL)
 metadata:
   version: skill-v1.0.23
@@ -26,7 +26,7 @@ Run the automated setup helper that checks and configures everything:
 
 ```bash
 # Download and run setup helper
-curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools/main/dmtools-ai-docs/setup-dmtools.sh | bash
+curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools-cli/main/dmtools-ai-docs/setup-dmtools.sh | bash
 ```
 
 **This script will:**
@@ -47,7 +47,7 @@ which dmtools || echo "DMtools not installed"
 **If NOT installed:**
 ```bash
 # Offer to install DMtools automatically
-curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools-cli/main/install | bash
 ```
 
 ### Step 2: Check for dmtools.env configuration
@@ -157,7 +157,7 @@ If automated setup didn't work, follow these manual steps:
 
 #### 1. Install DMtools CLI
 ```bash
-curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools-cli/main/install | bash
 ```
 
 #### 2. Create dmtools.env
@@ -397,7 +397,7 @@ See [CLI Integration Guide](references/agents/cli-integration.md) for complete e
 
 | Issue | Solution |
 |-------|----------|
-| "Java 23 required" | Run installer again, it auto-installs Java |
+| "Java 17+ required" | Run installer again, it auto-installs Java |
 | "401 Unauthorized" | Check base64 encoding of Jira credentials |
 | "Rate limit exceeded" | Add `sleep(1000)` between API calls |
 | "Field not found" | Use `jira_get_fields` to find custom field IDs |
@@ -453,7 +453,7 @@ I'll help you configure it. First, which integrations do you need?
 
 ```bash
 # Step 1: Run automated setup
-curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools/main/dmtools-ai-docs/setup-dmtools.sh | bash
+curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools-cli/main/dmtools-ai-docs/setup-dmtools.sh | bash
 
 # Step 2: If dmtools.env needs credentials, guide user:
 # "I've created dmtools.env. You need to add your credentials:
