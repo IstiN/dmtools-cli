@@ -1703,7 +1703,7 @@ public class TeamsClient extends MicrosoftGraphRestClient {
             logger.warn("Multiple channels found matching '{}', returning first match", channelName);
         }
         
-        Channel result = matches.getFirst();
+        Channel result = matches.get(0);
         logger.info("Found channel: {} (ID: {})", result.getDisplayName(), result.getId());
         return result;
     }

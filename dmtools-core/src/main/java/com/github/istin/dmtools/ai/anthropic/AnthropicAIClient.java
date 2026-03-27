@@ -346,7 +346,7 @@ public class AnthropicAIClient extends AbstractRestClient implements AI {
             messageJson.put("role", message.getRole());
 
             if (message.getFiles() != null && !message.getFiles().isEmpty()) {
-                File imageFile = message.getFiles().getFirst();
+                File imageFile = message.getFiles().get(0);
                 String extension = ImageUtils.getExtension(imageFile);
                 String imageBase64 = ImageUtils.convertToBase64(imageFile, extension);
                 String mediaType = "image/" + extension;
@@ -387,7 +387,7 @@ public class AnthropicAIClient extends AbstractRestClient implements AI {
 
     @Override
     public String chat(String model, String message, List<File> files) throws Exception {
-        return chat(model, message, files != null && !files.isEmpty() ? files.getFirst() : null);
+        return chat(model, message, files != null && !files.isEmpty() ? files.get(0) : null);
     }
 
     public String chat(String model, String message) throws Exception {

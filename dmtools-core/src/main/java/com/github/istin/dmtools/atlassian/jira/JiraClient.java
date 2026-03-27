@@ -246,7 +246,7 @@ public abstract class JiraClient<T extends Ticket> implements RestClient, Tracke
         GenericRequest jiraRequest = new GenericRequest(this, path("user/search?query=" + email));
         List<Assignee> result = JSONModel.convertToModels(Assignee.class, new JSONArray(jiraRequest.execute()));
         if (!result.isEmpty()) {
-            return result.getFirst();
+            return result.get(0);
         } else {
             return null;
         }

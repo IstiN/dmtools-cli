@@ -84,9 +84,9 @@ dependencies {
 
     // Playwright dependency moved to dmtools-automation module
 
-    // GraalVM
-    api "org.graalvm.sdk:graal-sdk:${versions.graalvm}"
-    api "org.graalvm.js:js:${versions.graalvm}"
+    // GraalVM JS (community edition - works on any JDK 17+, no GraalVM JDK required)
+    api "org.graalvm.polyglot:polyglot:${versions.graalvm}"
+    api "org.graalvm.js:js-community:${versions.graalvm}"
     api "org.graalvm.js:js-scriptengine:${versions.graalvm}"
 
     // Other tools
