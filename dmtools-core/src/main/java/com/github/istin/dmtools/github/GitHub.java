@@ -663,7 +663,38 @@ public abstract class GitHub extends AbstractRestClient implements SourceCode, U
             body.put("start_side", (side != null && !side.trim().isEmpty()) ? side.toUpperCase() : "RIGHT");
         }
         postRequest.setBody(body.toString());
+        // Auto-submit any pending review before posting to avoid GitHub's
+        // "user_id can only have one pending review per pull request" 422 error.
+        // GitHub internally associates /pulls/{pr}/comments with a pending review,
+        // so a second call fails unless the previous pending review is submitted first.
+        submitPendingReview(workspace, repository, pullRequestId);
         return post(postRequest);
+    }
+
+    private void submitPendingReview(String workspace, String repository, String pullRequestId) {
+        try {
+            String reviewsPath = path(String.format("repos/%s/%s/pulls/%s/reviews", workspace, repository, pullRequestId));
+            GenericRequest reviewsRequest = new GenericRequest(this, reviewsPath);
+            String reviewsResponse = execute(reviewsRequest);
+            if (reviewsResponse == null) return;
+            JSONArray reviews = new JSONArray(reviewsResponse);
+            for (int i = 0; i < reviews.length(); i++) {
+                JSONObject review = reviews.getJSONObject(i);
+                if ("PENDING".equals(review.optString("state"))) {
+                    long reviewId = review.getLong("id");
+                    String submitPath = path(String.format("repos/%s/%s/pulls/%s/reviews/%s/events",
+                            workspace, repository, pullRequestId, reviewId));
+                    GenericRequest submitRequest = new GenericRequest(this, submitPath);
+                    JSONObject submitBody = new JSONObject();
+                    submitBody.put("event", "COMMENT");
+                    submitBody.put("body", "");
+                    submitRequest.setBody(submitBody.toString());
+                    post(submitRequest);
+                }
+            }
+        } catch (Exception ignored) {
+            // Best-effort: if we can't submit a pending review, proceed anyway
+        }
     }
 
     @MCPTool(
