@@ -1,0 +1,33 @@
+Common Public License - v 1.0
+
+THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS COMMON PUBLIC
+LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM
+CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+
+1. DEFINITIONS
+
+"Contribution" means:
+  a) in the case of the initial Contributor, the initial code and documentation
+     distributed under this Agreement, and
+  b) in the case of each subsequent Contributor:
+     i)  changes to the Program, and
+     ii) additions to the Program;
+
+Full license text: https://www.eclipse.org/legal/cpl-v10.html
+
+---
+
+SCOPE OF USE IN THIS PROJECT (dmtools-core):
+  !! TEST-ONLY — NOT SHIPPED IN PRODUCTION ARTIFACT !!
+
+  - junit:junit:4.13.2 — testImplementation scope only
+    Black Duck detects both CPL 1.0 and EPL 1.0 on this artifact due to
+    JUnit 4's historical licensing transition from CPL 1.0 to EPL 1.0.
+    The current junit:junit:4.13.2 is published under EPL 1.0; CPL 1.0
+    headers may appear in older class files within the artifact.
+
+  This dependency is excluded from:
+  - The shadow JAR (runtimeClasspath does not include testImplementation)
+  - The published Maven POM runtime/compile dependencies
+
+  No CPL 1.0 obligations apply to downstream consumers of dmtools-core.

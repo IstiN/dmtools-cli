@@ -1,0 +1,34 @@
+Eclipse Public License - v 2.0
+
+    THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE
+    PUBLIC LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION
+    OF THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+
+1. DEFINITIONS
+
+"Contribution" means:
+  a) in the case of the initial Contributor, the initial content
+     Distributed under this Agreement, and
+  b) in the case of each subsequent Contributor:
+     i) changes to the Program, and
+     ii) additions to the Program;
+  where such changes and/or additions to the Program originate from
+  and are Distributed by that particular Contributor.
+
+Full license text: https://www.eclipse.org/legal/epl-2.0/
+
+---
+
+SCOPE OF USE IN THIS PROJECT (dmtools-core):
+  !! TEST-ONLY — NOT SHIPPED IN PRODUCTION ARTIFACT !!
+
+  - org.junit.jupiter:junit-jupiter:5.11.4      — testImplementation scope only
+  - org.junit.vintage:junit-vintage-engine:5.11.4 — testRuntimeOnly scope only
+
+  These dependencies are excluded from:
+  - The shadow JAR (runtimeClasspath does not include testImplementation/testRuntimeOnly)
+  - The published Maven POM runtime/compile dependencies
+
+  Usage pattern: Dynamic linking (JVM classpath) only. No source code inclusion.
+  No EPL 2.0 obligations (attribution, include license, state changes) apply to
+  downstream consumers of dmtools-core.

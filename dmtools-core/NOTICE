@@ -1,0 +1,172 @@
+DMTools Core
+Copyright 2023-2026 EPAM Systems, Inc.
+
+This product is licensed under the Apache License, Version 2.0.
+You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
+
+=========================================================================
+THIRD-PARTY COMPONENTS
+=========================================================================
+
+This product includes software developed by third parties. All components
+listed below are included in the shipped artifact (runtimeClasspath / shadow JAR).
+Test-only dependencies (JUnit, Mockito) are NOT shipped and carry no obligations
+for downstream consumers — see COMPLIANCE-NOTES.md for details.
+
+-------------------------------------------------------------------------
+Apache License 2.0  —  http://www.apache.org/licenses/LICENSE-2.0
+-------------------------------------------------------------------------
+
+  OkHttp
+  Copyright 2016 Square, Inc.
+  https://github.com/square/okhttp
+
+  Apache Commons Lang
+  Copyright 2001-2024 The Apache Software Foundation
+  https://commons.apache.org/proper/commons-lang/
+
+  Apache Log4j API
+  Copyright 1999-2024 The Apache Software Foundation
+  https://logging.apache.org/log4j/
+
+  Apache Log4j Core
+  Copyright 1999-2024 The Apache Software Foundation
+  https://logging.apache.org/log4j/
+
+  Apache Log4j SLF4J 2.0 Binding
+  Copyright 1999-2024 The Apache Software Foundation
+  https://logging.apache.org/log4j/
+
+  Apache FreeMarker
+  Copyright 2015-2024 The Apache Software Foundation
+  https://freemarker.apache.org/
+
+  Apache POI
+  Copyright 2003-2024 The Apache Software Foundation
+  https://poi.apache.org/
+
+  Apache POI OOXML
+  Copyright 2003-2024 The Apache Software Foundation
+  https://poi.apache.org/
+
+  Apache PDFBox
+  Copyright 2002-2024 The Apache Software Foundation
+  https://pdfbox.apache.org/
+
+  Guava: Google Core Libraries for Java
+  Copyright 2007-2024 The Guava Authors
+  https://github.com/google/guava
+
+  Guava FailureAccess
+  Copyright 2018 The Guava Authors
+  https://github.com/google/guava
+
+  Google Dagger
+  Copyright 2012 The Dagger Authors
+  https://dagger.dev/
+
+  Google Gson
+  Copyright 2008 Google Inc.
+  https://github.com/google/gson
+
+  Jackson Databind
+  Copyright 2007-2024 FasterXML, LLC
+  https://github.com/FasterXML/jackson-databind
+
+  Swagger Annotations (OpenAPI)
+  Copyright 2010-2024 SmartBear Software
+  https://swagger.io/
+
+  AWS SDK for Java — Auth
+  Copyright 2010-2024 Amazon.com, Inc. or its affiliates
+  https://aws.amazon.com/sdk-for-java/
+
+  AWS SDK for Java — Core
+  Copyright 2010-2024 Amazon.com, Inc. or its affiliates
+  https://aws.amazon.com/sdk-for-java/
+
+  AWS SDK for Java — Regions
+  Copyright 2010-2024 Amazon.com, Inc. or its affiliates
+  https://aws.amazon.com/sdk-for-java/
+
+  Google Cloud Core
+  Copyright 2015-2024 Google LLC
+  https://github.com/googleapis/google-cloud-java
+
+  SimMetrics Core
+  Copyright 2014 Peet Bremer
+  https://github.com/Simmetrics/simmetrics
+
+-------------------------------------------------------------------------
+MIT License  —  https://opensource.org/licenses/MIT
+-------------------------------------------------------------------------
+
+  SLF4J API
+  Copyright 2004-2023 QOS.ch Sarl
+  https://www.slf4j.org/
+
+  jsoup
+  Copyright 2009-2024 Jonathan Hedley
+  https://jsoup.org/
+
+  copy-down (HTML to Markdown converter)
+  Copyright 2017 Furstenheim
+  https://github.com/furstenheim/copy-down
+
+  Lorem (Lorem Ipsum generator)
+  Copyright 2012 Michael De Anda
+  https://github.com/mdeanda/lorem
+
+  JToon (Token-Oriented Object Notation)
+  Copyright 2024 Toon Format
+  https://github.com/toon-format/toon-java
+
+-------------------------------------------------------------------------
+Universal Permissive License (UPL) 1.0  —  https://oss.oracle.com/licenses/upl/
+-------------------------------------------------------------------------
+
+  GraalVM Polyglot API
+  Copyright 2018, 2024 Oracle and/or its affiliates
+  https://www.graalvm.org/
+
+  GraalVM JavaScript Community
+  Copyright 2018, 2024 Oracle and/or its affiliates
+  https://www.graalvm.org/
+
+  GraalVM JavaScript ScriptEngine
+  Copyright 2018, 2024 Oracle and/or its affiliates
+  https://www.graalvm.org/
+
+  Note: UPL 1.0 is a permissive OSI-approved license. It allows commercial use,
+  closed-source distribution, and modification without source disclosure.
+  It includes an explicit patent grant. No copyleft obligations apply.
+
+-------------------------------------------------------------------------
+BSD 3-Clause License  —  https://opensource.org/licenses/BSD-3-Clause
+-------------------------------------------------------------------------
+
+  Google Auth Library — OAuth2 HTTP
+  Copyright 2014, Google Inc. All rights reserved.
+  https://github.com/googleapis/google-auth-library-java
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+  1. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+  2. Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation.
+  3. Neither the name of Google Inc. nor the names of its contributors may be
+     used to endorse or promote products derived from this software without
+     specific prior written permission.
+
+-------------------------------------------------------------------------
+Public Domain
+-------------------------------------------------------------------------
+
+  JSON-java (org.json)
+  Author: Sean Leary / JSON.org
+  https://github.com/stleary/JSON-java
+
+  Note: Current version (20250517) is declared Public Domain. The historical
+  "shall be used for Good, not Evil" clause from the original JSON.org license
+  does NOT apply to this version.
