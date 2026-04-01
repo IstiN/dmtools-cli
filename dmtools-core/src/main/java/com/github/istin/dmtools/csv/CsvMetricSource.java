@@ -8,7 +8,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
 import java.util.*;
 
 /**
@@ -36,7 +41,7 @@ public class CsvMetricSource extends CommonSourceCollector {
     private final double weightMultiplier;
     private final String defaultWho;
     private final String dateFormat;
-    private final SimpleDateFormat customDateFormat;
+    private final DateTimeFormatter customDateFormat;
     private final String filterColumn;
     private final List<String> filterValues;
 
@@ -59,10 +64,7 @@ public class CsvMetricSource extends CommonSourceCollector {
         this.filterColumn = filterColumn;
         this.filterValues = (filterValues != null && !filterValues.isEmpty()) ? filterValues : null;
         if (dateFormat != null && !dateFormat.isEmpty()) {
-            SimpleDateFormat fmt = new SimpleDateFormat(dateFormat);
-            fmt.setTimeZone(TimeZone.getTimeZone("UTC"));
-            fmt.setLenient(false);
-            this.customDateFormat = fmt;
+            this.customDateFormat = DateTimeFormatter.ofPattern(dateFormat).withZone(ZoneOffset.UTC);
         } else {
             this.customDateFormat = null;
         }
@@ -293,36 +295,40 @@ public class CsvMetricSource extends CommonSourceCollector {
         }
     }
 
-    private static final SimpleDateFormat[] DATE_FORMATS = {
-        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
-        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"),
-        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX"),
-        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"),
-        new SimpleDateFormat("yyyy-MM-dd"),
-        new SimpleDateFormat("MM/dd/yyyy"),
-        new SimpleDateFormat("dd/MM/yyyy"),
+    /** Formatters for patterns that include a time component (all anchored to UTC). */
+    private static final DateTimeFormatter[] DATETIME_FORMATTERS = {
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneOffset.UTC),
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC),
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX"),
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").withZone(ZoneOffset.UTC),
     };
 
-    static {
-        TimeZone utc = TimeZone.getTimeZone("UTC");
-        for (SimpleDateFormat fmt : DATE_FORMATS) {
-            fmt.setTimeZone(utc);
-            fmt.setLenient(false);
-        }
+    /** Formatters for date-only patterns (time is set to midnight UTC). */
+    private static final DateTimeFormatter[] DATE_FORMATTERS = {
+        DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+        DateTimeFormatter.ofPattern("MM/dd/yyyy"),
+        DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+    };
+
+    private static Calendar toCalendar(Instant instant) {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        cal.setTimeInMillis(instant.toEpochMilli());
+        return cal;
     }
 
     static Calendar parseDate(String value) {
         if (value == null || value.trim().isEmpty()) return null;
         value = value.trim();
-        for (SimpleDateFormat fmt : DATE_FORMATS) {
+        for (DateTimeFormatter fmt : DATETIME_FORMATTERS) {
             try {
-                synchronized (fmt) {
-                    Date date = fmt.parse(value);
-                    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                    cal.setTime(date);
-                    return cal;
-                }
-            } catch (Exception ignored) {
+                return toCalendar(Instant.from(fmt.parse(value)));
+            } catch (DateTimeParseException ignored) {
+            }
+        }
+        for (DateTimeFormatter fmt : DATE_FORMATTERS) {
+            try {
+                return toCalendar(LocalDate.parse(value, fmt).atStartOfDay(ZoneOffset.UTC).toInstant());
+            } catch (DateTimeParseException ignored) {
             }
         }
         logger.debug("Failed to parse date: {}", value);
@@ -333,11 +339,12 @@ public class CsvMetricSource extends CommonSourceCollector {
         if (value == null || value.trim().isEmpty()) return null;
         if (customDateFormat != null) {
             try {
-                synchronized (customDateFormat) {
-                    Date date = customDateFormat.parse(value.trim());
-                    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                    cal.setTime(date);
-                    return cal;
+                String trimmed = value.trim();
+                TemporalAccessor parsed = customDateFormat.parse(trimmed);
+                try {
+                    return toCalendar(Instant.from(parsed));
+                } catch (DateTimeParseException ignored) {
+                    return toCalendar(LocalDate.from(parsed).atStartOfDay(ZoneOffset.UTC).toInstant());
                 }
             } catch (Exception ignored) {
             }
