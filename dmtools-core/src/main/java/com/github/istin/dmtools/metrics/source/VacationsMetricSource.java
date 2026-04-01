@@ -6,6 +6,7 @@ import com.github.istin.dmtools.vacation.Vacation;
 import com.github.istin.dmtools.vacation.Vacations;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class VacationsMetricSource extends CommonSourceCollector {
@@ -34,7 +35,11 @@ public class VacationsMetricSource extends CommonSourceCollector {
                     continue;
                 }
             }
-            KeyTime keyTime = new KeyTime("" + i, vacation.getStartDateAsCalendar(), isPersonalized ? name : metricName);
+            Calendar startCalendar = vacation.getStartDateAsCalendar();
+            if (startCalendar == null) {
+                continue;
+            }
+            KeyTime keyTime = new KeyTime("" + i, startCalendar, isPersonalized ? name : metricName);
             int vacationHours = (int) (vacation.getDuration() * 8);
 
             if (isDays) {

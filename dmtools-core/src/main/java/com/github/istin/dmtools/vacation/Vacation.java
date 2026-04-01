@@ -55,14 +55,22 @@ public class Vacation extends JSONModel {
     }
 
     public Calendar getStartDateAsCalendar() {
+        Date date = getStartDateAsDate();
+        if (date == null) {
+            return null;
+        }
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(getStartDateAsDate());
+        calendar.setTime(date);
         return calendar;
     }
 
     public Calendar getEndDateAsCalendar() {
+        Date date = getEndDateAsDate();
+        if (date == null) {
+            return null;
+        }
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(getEndDateAsDate());
+        calendar.setTime(date);
         return calendar;
     }
 
