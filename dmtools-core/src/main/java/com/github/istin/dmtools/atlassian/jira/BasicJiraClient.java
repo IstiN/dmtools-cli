@@ -88,7 +88,7 @@ public class BasicJiraClient extends JiraClient<Ticket> {
     private final String[] extendedJiraFields;
     private final String[] customCodesOfConfigFields;
 
-    public static TrackerClient<? extends ITicket> getInstance() throws IOException {
+    public static synchronized TrackerClient<? extends ITicket> getInstance() throws IOException {
         if (instance == null) {
             if (BASE_PATH == null || BASE_PATH.isEmpty()) {
                 logger.debug("Jira configuration not found. Set JIRA_BASE_PATH and JIRA_EMAIL+JIRA_API_TOKEN (or JIRA_LOGIN_PASS_TOKEN).");

@@ -43,7 +43,7 @@ public class BasicBitbucket extends Bitbucket {
 
     private static BasicBitbucket instance;
 
-    public static SourceCode getInstance() throws IOException {
+    public static synchronized SourceCode getInstance() throws IOException {
         if (instance == null) {
             instance = new BasicBitbucket();
         }

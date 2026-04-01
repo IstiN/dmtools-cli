@@ -21,7 +21,7 @@ public class BasicFigmaClient extends FigmaClient {
         super(BASE_PATH, API_KEY);
     }
 
-    public static FigmaClient getInstance() throws IOException {
+    public static synchronized FigmaClient getInstance() throws IOException {
         if (instance == null) {
             if (BASE_PATH == null || BASE_PATH.isEmpty()) {
                 return null;

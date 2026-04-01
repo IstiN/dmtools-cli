@@ -37,7 +37,7 @@ public class BasicGithub extends GitHub {
 
     private static BasicGithub instance;
 
-    public static SourceCode getInstance() throws IOException {
+    public static synchronized SourceCode getInstance() throws IOException {
         if (instance == null) {
             if (!DEFAULT_CONFIG.isConfigured()) {
                 return null;

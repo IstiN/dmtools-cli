@@ -28,7 +28,7 @@ public class Vacations {
 
     }
 
-    public static Vacations getInstance() {
+    public static synchronized Vacations getInstance() {
         if (instance == null) {
             instance = new Vacations();
         }

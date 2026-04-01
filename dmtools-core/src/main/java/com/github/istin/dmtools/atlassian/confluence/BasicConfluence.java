@@ -32,7 +32,7 @@ public class BasicConfluence extends Confluence {
 
     private static BasicConfluence instance;
 
-    public static BasicConfluence getInstance() throws IOException {
+    public static synchronized BasicConfluence getInstance() throws IOException {
         if (instance == null) {
             if (!CONFIG.isConfigured()) {
                 return null;
