@@ -261,6 +261,9 @@ public class GitHubWorkflowUtils {
             if (code == 302 || code == 301) {
                 String location = conn.getHeaderField("Location");
                 if (location == null) throw new IOException("No Location header in redirect response");
+                if (!location.startsWith("https://")) {
+                    throw new IOException("Redirect location is not HTTPS — aborting to prevent SSRF: " + location);
+                }
                 return location;
             }
             throw new IOException("Expected redirect (301/302) but got HTTP " + code);
@@ -270,6 +273,9 @@ public class GitHubWorkflowUtils {
     }
 
     private static byte[] downloadBytes(String url) throws IOException {
+        if (!url.startsWith("https://")) {
+            throw new IOException("Only HTTPS URLs are permitted for artifact download: " + url);
+        }
         HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
         conn.setConnectTimeout(30000);
         conn.setReadTimeout(60000);
