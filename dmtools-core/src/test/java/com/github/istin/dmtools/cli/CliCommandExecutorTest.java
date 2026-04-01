@@ -146,6 +146,20 @@ public class CliCommandExecutorTest {
                 result.toLowerCase().contains("git version"));
     }
 
+    @Test(expected = SecurityException.class)
+    public void testExecuteCommand_PathTraversal_ThrowsSecurityException() throws IOException, InterruptedException {
+        // /etc is a real directory but outside all allowed bases — must be rejected
+        executor.executeCommand("git --version", "/etc");
+    }
+
+    @Test(expected = SecurityException.class)
+    public void testExecuteCommand_PathTraversalWithDotDot_ThrowsSecurityException() throws IOException, InterruptedException {
+        // Traverse upward from user.dir to a real ancestor directory outside all allowed bases.
+        // E.g. /Users/user/project/../../.. canonicalises to /Users which is above user.dir.
+        String traversal = System.getProperty("user.dir") + "/../../..";
+        executor.executeCommand("git --version", traversal);
+    }
+
     @Test
     public void testExecuteCommand_NullWorkingDirectory_UsesGitRoot() throws IOException, InterruptedException {
         // Test with null working directory - should use git root or current dir

@@ -180,27 +180,29 @@ public class CliCommandExecutor {
     
     /**
      * Resolves working directory for command execution.
-     * 
+     *
      * Resolution strategy:
-     * 1. If workingDirectory specified, use it (validate existence)
+     * 1. If workingDirectory specified, validate it exists and is within an allowed base, then use it
      * 2. Try to detect git repository root using 'git rev-parse --show-toplevel'
      * 3. Fallback to current directory
-     * 
+     *
      * @param workingDirectory User-specified working directory (optional)
      * @return Resolved working directory
+     * @throws SecurityException if the supplied path traverses outside all allowed base directories
      */
     private File resolveWorkingDirectory(String workingDirectory) {
-        // If working directory explicitly specified, use it
+        // If working directory explicitly specified, validate and use it
         if (workingDirectory != null && !workingDirectory.trim().isEmpty()) {
             File specifiedDir = new File(workingDirectory.trim());
-            
+
             if (specifiedDir.exists() && specifiedDir.isDirectory()) {
+                validateWithinAllowedBase(specifiedDir);
                 return specifiedDir;
             } else {
                 logger.warn("Specified working directory does not exist or is not a directory: {}, falling back to git root or current directory", workingDirectory);
             }
         }
-        
+
         // Try to detect git repository root
         try {
             String gitRoot = CommandLineUtils.runCommand("git rev-parse --show-toplevel");
@@ -214,11 +216,56 @@ public class CliCommandExecutor {
         } catch (Exception e) {
             logger.debug("Could not detect git repository root: {}, falling back to current directory", e.getMessage());
         }
-        
+
         // Fallback to current directory
         File currentDir = new File(System.getProperty("user.dir"));
         logger.debug("Using current directory: {}", currentDir.getAbsolutePath());
         return currentDir;
+    }
+
+    /**
+     * Validates that {@code dir} resolves (after canonicalisation) to a path within one of
+     * the allowed base directories: the JVM working directory, the git repository root, or
+     * the system temporary-files directory.
+     *
+     * <p>Canonicalisation strips {@code ..} components, so attempts such as
+     * {@code /safe/path/../../etc/passwd} are caught before the directory is used.
+     *
+     * @param dir the directory to validate
+     * @throws SecurityException if the canonical path is not under any allowed base
+     */
+    private void validateWithinAllowedBase(File dir) {
+        try {
+            String canonical = dir.getCanonicalPath() + File.separator;
+
+            String userDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator;
+            String tmpDir  = new File(System.getProperty("java.io.tmpdir")).getCanonicalPath() + File.separator;
+
+            if (canonical.startsWith(userDir) || canonical.startsWith(tmpDir)) {
+                return;
+            }
+
+            // Also allow the git repository root when detectable
+            try {
+                String gitRoot = CommandLineUtils.runCommand("git rev-parse --show-toplevel");
+                if (gitRoot != null && !gitRoot.trim().isEmpty()) {
+                    String gitCanonical = new File(gitRoot.trim()).getCanonicalPath() + File.separator;
+                    if (canonical.startsWith(gitCanonical)) {
+                        return;
+                    }
+                }
+            } catch (Exception ignored) {
+                // git not available — skip this base
+            }
+
+            throw new SecurityException(
+                    "Working directory is outside all allowed base paths (user.dir, git root, tmpdir): " + dir);
+
+        } catch (SecurityException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new SecurityException("Could not validate working directory: " + dir, e);
+        }
     }
     
     /**
