@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class JSONResourceReader  {
 
@@ -24,7 +24,7 @@ public class JSONResourceReader  {
 
     private static JSONResourceReader instance;
 
-    private static Map<String, JSONResourceReader> jsonConfigs = new HashMap<>();
+    private static final Map<String, JSONResourceReader> jsonConfigs = new ConcurrentHashMap<>();
 
 
     JSONResourceReader(String file) {
