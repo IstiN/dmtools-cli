@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Employees implements IEmployees {
 
@@ -63,7 +64,7 @@ public class Employees implements IEmployees {
 
     private static Employees instance;
 
-    private static Map<String, Employees> roleInstances = new HashMap<>();
+    private static Map<String, Employees> roleInstances = new ConcurrentHashMap<>();
 
 
     private Employees(String file, String filterRole) {
@@ -106,7 +107,7 @@ public class Employees implements IEmployees {
         Employees employees = roleInstances.get(role + file);
         if (employees == null) {
             employees = new Employees(file, role);
-            roleInstances.put(role, employees);
+            roleInstances.put(role + file, employees);
         }
         return employees;
     }
