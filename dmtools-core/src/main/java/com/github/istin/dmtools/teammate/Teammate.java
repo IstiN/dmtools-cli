@@ -481,7 +481,7 @@ public class Teammate extends AbstractJob<Teammate.TeammateParams, List<ResultIt
 
                     // Execute CLI commands from project root directory (where cursor-agent can find workspace config)
                     Path projectRoot = Paths.get(System.getProperty("user.dir"));
-                    cliResult = cliHelper.executeCliCommandsWithResult(finalCliCommands, projectRoot, null);
+                    cliResult = cliHelper.executeCliCommandsWithResult(finalCliCommands, projectRoot, null, expertParams.getEnvVariables());
                     
                     // Append CLI responses to knownInfo if not empty
                     StringBuilder cliResponses = cliResult.getCommandResponses();

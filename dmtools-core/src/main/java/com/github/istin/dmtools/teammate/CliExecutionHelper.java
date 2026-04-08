@@ -227,6 +227,10 @@ public class CliExecutionHelper {
      * @return StringBuilder containing all command responses
      */
     public StringBuilder executeCliCommands(String[] cliCommands, Path workingDirectory, String envVariablesFile) {
+        return executeCliCommands(cliCommands, workingDirectory, envVariablesFile, null);
+    }
+
+    public StringBuilder executeCliCommands(String[] cliCommands, Path workingDirectory, String envVariablesFile, Map<String, String> extraEnvVars) {
         StringBuilder cliResponses = new StringBuilder();
         
         if (cliCommands == null || cliCommands.length == 0) {
@@ -245,6 +249,12 @@ public class CliExecutionHelper {
             if (envVars.containsKey("CURSOR_API_KEY")) {
                 logger.info("CURSOR_API_KEY found in environment (length: {})", envVars.get("CURSOR_API_KEY").length());
             }
+        }
+
+        // Merge per-job envVariables (highest priority — override dmtools.env values)
+        if (extraEnvVars != null && !extraEnvVars.isEmpty()) {
+            envVars.putAll(extraEnvVars);
+            logger.info("Merged {} extra env variables from job params (e.g. COPILOT_MODEL override)", extraEnvVars.size());
         }
         
         // Convert Path to File for ProcessBuilder - safer than changing system properties
@@ -299,7 +309,11 @@ public class CliExecutionHelper {
      * @return CliExecutionResult containing command responses and output response
      */
     public CliExecutionResult executeCliCommandsWithResult(String[] cliCommands, Path workingDirectory, String envVariablesFile) {
-        StringBuilder cliResponses = executeCliCommands(cliCommands, workingDirectory, envVariablesFile);
+        return executeCliCommandsWithResult(cliCommands, workingDirectory, envVariablesFile, null);
+    }
+
+    public CliExecutionResult executeCliCommandsWithResult(String[] cliCommands, Path workingDirectory, String envVariablesFile, Map<String, String> extraEnvVars) {
+        StringBuilder cliResponses = executeCliCommands(cliCommands, workingDirectory, envVariablesFile, extraEnvVars);
         
         // Check for output response file in the working directory where commands were executed
         String outputResponse = processOutputResponse(workingDirectory);
